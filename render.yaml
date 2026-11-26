@@ -1,0 +1,31 @@
+# Blueprint de Render para FinansChecker (backend y frontend en plan gratuito)
+# Las variables marcadas con sync: false se llenan a mano en el panel de Render
+services:
+  - type: web
+    name: finanschecker-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: finanschecker-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    # React Router maneja las rutas en el navegador, todas se sirven con index.html
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
