@@ -1,0 +1,22 @@
+# Variables de entorno, nunca se suben al repositorio
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Node y Vite
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Editores y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
